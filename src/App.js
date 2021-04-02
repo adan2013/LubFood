@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useContext} from 'react'
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom'
+ import LoginPage from './views/LoginPage'
+ import Layout from './components/Layout'
+ import routes from './routes'
+import {UserContext} from './firebase/UserContext'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const PrivateRoute = () => {
+    const authorized = useContext(UserContext)
+    if(authorized) {
+        return (
+            <Layout>
+              <Switch>
+                {
+                  routes.map((route, idx) => (
+                      <Route key={idx}
+                             path={route.path}
+                             exact={route.exact}
+                             name={route.name}
+                             render={props => (
+                                 <route.component {...props} />
+                             )} />
+                  ))
+                }
+              </Switch>
+            </Layout>
+        )
+    }else{
+        return (
+            <Redirect to={'/'}/>
+        )
+    }
 }
 
-export default App;
+const App = () => (
+    <BrowserRouter>
+      <React.Suspense fallback={() => <span>Loading...</span>}>
+        <Switch>
+          <Route exact path="/" name="Login Page" render={props => <LoginPage {...props} />} />
+          <PrivateRoute/>
+        </Switch>
+      </React.Suspense>
+    </BrowserRouter>
+)
+
+export default App
