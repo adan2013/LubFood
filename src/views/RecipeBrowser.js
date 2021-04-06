@@ -3,15 +3,17 @@ import { Button } from 'react-bootstrap'
 import styled from 'styled-components'
 import config from '../config'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { useHistory } from 'react-router-dom'
+import { faChevronRight, faChevronLeft, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { useHistory, useParams } from 'react-router-dom'
 import CardTitle from '../components/CardTitle'
+import { getRecipesFromCategory } from '../firebase/firestore/recipes'
+import DataLoader from '../components/DataLoader'
 
 const ButtonGroup = styled.div`
   padding: 10px;
 `
 
-const CategoryButton = styled(Button)`
+const RecipeButton = styled(Button)`
   position: relative;
   text-align: left;
   line-height: 40px;
@@ -27,22 +29,30 @@ const CategoryArrowIcon = styled(FontAwesomeIcon)`
 
 const RecipeBrowser = () => {
     const history = useHistory()
+    const { category } = useParams()
     return(
         <>
-            <CardTitle>Wybierz kategorię</CardTitle>
-            <ButtonGroup>
-                {
-                    config.categories.map(category => (
-                        <CategoryButton key={category.code}
-                                        variant={'light'}
-                                        block
-                                        onClick={() => history.push(`/recipes/${category.code}`)}>
-                            {category.name}
-                            <CategoryArrowIcon icon={faChevronRight} />
-                        </CategoryButton>
-                    ))
-                }
-            </ButtonGroup>
+            <CardTitle
+                leftButton={{ link: `/recipes`, variant: `light`, icon: faChevronLeft }}
+                rightButton={{ link: `/recipes/${category}/add`, variant: `success`, icon: faPlusCircle }}>
+                {config.categories.find(c => c.code === category).name}
+            </CardTitle>
+            <DataLoader loader={() => getRecipesFromCategory(category)}
+                        viewer={data => (
+                            <ButtonGroup>
+                                {
+                                    data.map(recipe => (
+                                        <RecipeButton key={recipe.id}
+                                                        variant={'light'}
+                                                        block
+                                                        onClick={() => history.push(`/recipes/${category}/${recipe.id}`)}>
+                                            {recipe.name}
+                                            <CategoryArrowIcon icon={faChevronRight} />
+                                        </RecipeButton>
+                                    ))
+                                }
+                            </ButtonGroup>
+                        )}/>
         </>
     )
 }
