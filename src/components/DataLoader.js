@@ -8,11 +8,11 @@ const Container = styled.div`
   font-size: 18px;
 `
 
-const DataLoader = ({viewer, loader}) => {
+const DataLoader = ({viewer, loader, refreshFlag}) => {
     const [data, setData] = useState(null)
     useEffect(() => {
         loader().then(resp => setData(resp))
-    }, [loader])
+    }, [loader, refreshFlag])
     if(data) {
         return(<Container>{viewer(data)}</Container>)
     }else{
@@ -22,7 +22,12 @@ const DataLoader = ({viewer, loader}) => {
 
 DataLoader.propTypes = {
     viewer: PropTypes.func.isRequired,
-    loader: PropTypes.func.isRequired
+    loader: PropTypes.func.isRequired,
+    refreshFlag: PropTypes.bool,
+}
+
+DataLoader.defaultProps = {
+    refreshFlag: false,
 }
 
 export default DataLoader
