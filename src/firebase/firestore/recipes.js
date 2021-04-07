@@ -14,8 +14,15 @@ export const getRecipesFromCategory = categoryCode => {
         .catch(err => alert(`GET ERROR ${err.code}`))
 }
 
-export const deleteRecipe = recipeId => {
+export const getRecipe = (categoryCode, recipeId) => {
+    return firebase.firestore().collection(categoryCode).doc(recipeId).get()
+        .then(recipe => recipe.data())
+        .catch(err => alert(`GET ERROR ${err.code}`))
+}
 
+export const deleteRecipe = (categoryCode, recipeId) => {
+    return firebase.firestore().collection(categoryCode).doc(recipeId).delete()
+        .catch(err => alert(`DELETE ERROR ${err.code}`))
 }
 
 export const addRecipe = (categoryCode, name, difficult, preparationTime, cookingTime) => {

@@ -15,10 +15,10 @@ const DataLoader = ({viewer, loader, refreshFlag}) => {
         loader().then(resp => setData(resp))
     }, [loader, refreshFlag])
     if(data) {
-        if(Array.isArray(data) && data.length > 0) {
-            return(<Container>{viewer(data)}</Container>)
-        }else{
+        if(Array.isArray(data) && data.length === 0) {
             return(<Container>Lista jest pusta</Container>)
+        }else{
+            return(viewer(data))
         }
     }else{
         return(<Container>Ładowanie...</Container>)

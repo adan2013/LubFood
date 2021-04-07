@@ -4,7 +4,6 @@ import { faUtensils, faShoppingCart, faSearch, faCarrot, faUser } from '@fortawe
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import config from '../config'
 
 const NavContainer = styled.div`
   width: 100%;
@@ -45,9 +44,9 @@ margin: 0 auto 4px auto;
 `
 
 const items = [
-    { icon: faUtensils, name: 'Przepisy', path: '/recipes', alternativePaths: config.categories.map(c => `/recipes/${c.code}`) },
-    { icon: faShoppingCart, name: 'Zakupy', path: '/shoping-list', alternativePaths: ['/panel/history/private', '/panel/history/public'] },
-    { icon: faSearch, name: 'Szukaj', path: '/search', alternativePaths: ['/panel/new/private', '/panel/new/public'] },
+    { icon: faUtensils, name: 'Przepisy', path: '/recipes' },
+    { icon: faShoppingCart, name: 'Zakupy', path: '/shoping-list' },
+    { icon: faSearch, name: 'Szukaj', path: '/search' },
     { icon: faCarrot, name: 'Składniki', path: '/ingredients' },
     { icon: faUser, name: 'Profil', path: '/profile' }
 ]
@@ -60,7 +59,7 @@ const NavMenu = () => {
                 items.map(item => (
                     <NavItem key={item.name}
                              to={item.path}
-                             className={(location.pathname === item.path || (item.alternativePaths && item.alternativePaths.includes(location.pathname))) && 'active'}>
+                             className={location.pathname.indexOf(item.path) >= 0 && 'active'}>
                         <FontAwesomeIcon className={'menu-icon'} icon={item.icon}/>
                         {item.name}
                     </NavItem>

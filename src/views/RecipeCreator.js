@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import styled from 'styled-components'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { useHistory, useParams } from 'react-router-dom'
 import CardTitle from '../components/CardTitle'
 import NumberPicker from '../components/NumberPicker'
-import { addRecipe, updateRecipe } from '../firebase/firestore/recipes'
+import { addRecipe, getRecipe, updateRecipe } from '../firebase/firestore/recipes'
 
 const Container = styled.div`
   padding: 10px;
@@ -32,6 +32,18 @@ const RecipeCreator = () => {
     const history = useHistory()
     const { category, recipe } = useParams()
 
+    useEffect(() => {
+        if(recipe) {
+            getRecipe(category, recipe)
+                .then(currentData => {
+                    setName(currentData.name)
+                    setDifficult(currentData.difficult)
+                    setPreparationTime(currentData.preparationTime)
+                    setCookingTime(currentData.cookingTime)
+                })
+        }
+    }, [])
+
     const validateData = () => name.length > 3
 
     const onSubmitButtonClick = () => {
@@ -47,7 +59,7 @@ const RecipeCreator = () => {
     return(
         <>
             <CardTitle
-                leftButton={{ link: `/recipes/${category}`, variant: `light`, icon: faChevronLeft }}>
+                leftButton={{ link: recipe ? `/recipes/${category}/${recipe}` : `/recipes/${category}`, variant: `light`, icon: faChevronLeft }}>
                 {recipe ? 'Edycja przepisu' : 'Nowy przepis'}
             </CardTitle>
             <Container>

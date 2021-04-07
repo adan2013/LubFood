@@ -14,7 +14,14 @@ const Btn = styled(Button)`
 
 const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label}) => {
     const [val, setVal] = useState(value)
-    useEffect(() => onChange(val), [val, onChange])
+    useEffect(() => setVal(value), [value])
+
+    const updateValue = diff => {
+        setVal(v => {
+            onChange(v + diff)
+            return v + diff
+        })
+    }
 
     return(
         <Container>
@@ -26,7 +33,7 @@ const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label}
                         {
                             step.slice().reverse().map(s => (
                                 <Btn key={'dn'+s} variant={'secondary'}
-                                     onClick={() => setVal(v => v - s)}
+                                     onClick={() => updateValue(-s)}
                                      disabled={val - s < minValue}>
                                     -{s}
                                 </Btn>
@@ -45,7 +52,7 @@ const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label}
                         {
                             step.map(s => (
                                 <Btn key={'up'+s} variant={'secondary'}
-                                     onClick={() => setVal(v => v + s)}
+                                     onClick={() => updateValue(s)}
                                      disabled={val + s > maxValue}>
                                     +{s}
                                 </Btn>
