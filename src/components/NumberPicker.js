@@ -8,35 +8,51 @@ const Container = styled.div`
 `
 
 const Btn = styled(Button)`
-  min-width: 70px;
+  min-width: 50px;
   font-weight: bold;
 `
 
-const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label, downText, upText}) => {
+const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label}) => {
     const [val, setVal] = useState(value)
-    useEffect(() => onChange(val), [val])
+    useEffect(() => onChange(val), [val, onChange])
 
     return(
         <Container>
             <InputGroup>
-                <InputGroup.Prepend>
-                    <Btn variant={'secondary'}
-                         onClick={() => setVal(p => p - step)}
-                         disabled={val - step < minValue}>
-                        {downText}
-                    </Btn>
-                </InputGroup.Prepend>
+                {
+                    step
+                    &&
+                    <InputGroup.Prepend>
+                        {
+                            step.slice().reverse().map(s => (
+                                <Btn key={'dn'+s} variant={'secondary'}
+                                     onClick={() => setVal(v => v - s)}
+                                     disabled={val - s < minValue}>
+                                    -{s}
+                                </Btn>
+                            ))
+                        }
+                    </InputGroup.Prepend>
+                }
                 <Form.Control type={'text'}
                               value={`${prefix}${val}${label}`}
                               style={{textAlign: 'center'}}
                               readOnly />
-                <InputGroup.Append>
-                    <Btn variant={'secondary'}
-                         onClick={() => setVal(p => p + step)}
-                         disabled={val + step > maxValue}>
-                        {upText}
-                    </Btn>
-                </InputGroup.Append>
+                {
+                    step
+                    &&
+                    <InputGroup.Append>
+                        {
+                            step.map(s => (
+                                <Btn key={'up'+s} variant={'secondary'}
+                                     onClick={() => setVal(v => v + s)}
+                                     disabled={val + s > maxValue}>
+                                    +{s}
+                                </Btn>
+                            ))
+                        }
+                    </InputGroup.Append>
+                }
             </InputGroup>
         </Container>
     )
@@ -45,23 +61,19 @@ const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label,
 NumberPicker.propTypes = {
     minValue: PropTypes.number,
     maxValue: PropTypes.number,
-    step: PropTypes.number,
+    step: PropTypes.array,
     value: PropTypes.number.isRequired,
     onChange: PropTypes.func.isRequired,
     prefix: PropTypes.string,
     label: PropTypes.string,
-    downText: PropTypes.string,
-    upText: PropTypes.string,
 }
 
 NumberPicker.defaultProps = {
     minValue: 0,
     maxValue: 100,
-    step: 1,
+    step: [1],
     prefix: '',
     label: '',
-    downText: '-',
-    upText: '+',
 }
 
 export default NumberPicker

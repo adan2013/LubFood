@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Form, InputGroup } from 'react-bootstrap'
+import { Button, Dropdown, Form, InputGroup } from 'react-bootstrap'
 import styled from 'styled-components'
+import config from '../config'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import CardTitle from '../components/CardTitle'
@@ -28,16 +29,19 @@ const TrashIcon = styled(FontAwesomeIcon)`
 
 const IngredientAdder = ({ onSubmit }) => {
     const [name, setName] = useState('')
+    const [dropdownIsOpen, setDropdownIsOpen] = useState(false)
+    const [unitType, setUnitType] = useState(config.ingredientUtils[0].code)
     const adder = () => {
-        addIngredient(name)
+        addIngredient(name, unitType)
             .then(() => {
                 setName('')
+                setUnitType(config.ingredientUtils[0].code)
                 if(onSubmit) onSubmit()
             })
     }
     return(
         <Container>
-            <InputGroup>
+            <InputGroup style={{marginBottom: '10px'}}>
                 <Form.Control type={'text'}
                               value={name}
                               onChange={e => setName(e.target.value)} placeholder={'Nazwa składnika'}
@@ -50,6 +54,22 @@ const IngredientAdder = ({ onSubmit }) => {
                     </Button>
                 </InputGroup.Append>
             </InputGroup>
+            <Dropdown isOpen={dropdownIsOpen} toggle={() => setDropdownIsOpen(v => !v)}>
+                <Dropdown.Toggle variant={'light'} caret block>
+                    Jednostka: {config.ingredientUtils.find(unit => unit.code === unitType).name}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {
+                        config.ingredientUtils.map(unit => (
+                            <Dropdown.Item key={unit.code}
+                                           onClick={() => setUnitType(unit.code)}
+                                           disabled={unit.code === unitType}>
+                                {unit.name}
+                            </Dropdown.Item>
+                        ))
+                    }
+                </Dropdown.Menu>
+            </Dropdown>
         </Container>
     )
 }
@@ -76,7 +96,7 @@ const IngredientBrowser = () => {
                                         variant={'light'}
                                         block
                                         onClick={() => setSelectedId(item.id)}>
-                                {item.name}
+                                {item.name} [{config.ingredientUtils.find(unit => unit.code === item.unit).name}]
                                 <TrashIcon icon={faTrash} style={{color: '#d00000'}} />
                             </ItemButton>
                         ))

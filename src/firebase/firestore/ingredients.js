@@ -19,7 +19,7 @@ export const deleteIngredient = ingredientId => {
         .catch(err => alert(`DELETE ERROR ${err.code}`))
 }
 
-export const addIngredient = name => {
-    return firebase.firestore().collection('ingredients').add({ name })
+export const addIngredient = (name, unit) => {
+    return firebase.firestore().collection('ingredients').add({ name, unit })
         .catch(err => alert(`ADD ERROR ${err.code}`))
 }

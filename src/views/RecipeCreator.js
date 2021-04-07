@@ -45,11 +45,11 @@ const RecipeCreator = () => {
                               minValue={1} maxValue={5} label={'/5'} />
                 <SectionTitle>Czas przygotowania</SectionTitle>
                 <NumberPicker onChange={v => setPreparationTime(v)}
-                              value={preparationTime} step={10}
+                              value={preparationTime} step={[10]}
                               maxValue={300} label={' min'} downText={'-10'} upText={'+10'} />
                 <SectionTitle>Czas gotowania</SectionTitle>
                 <NumberPicker onChange={v => setCookingTime(v)}
-                              value={cookingTime} step={10}
+                              value={cookingTime} step={[10]}
                               maxValue={300} label={' min'} downText={'-10'} upText={'+10'} />
 
                 <SectionTitle>Składniki</SectionTitle>
