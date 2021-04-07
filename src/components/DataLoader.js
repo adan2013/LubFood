@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 
 const Container = styled.div`
   text-align: center;
-  margin: 5px auto;
+  margin: 15px auto;
   font-size: 18px;
+  font-style: italic;
 `
 
 const DataLoader = ({viewer, loader, refreshFlag}) => {
@@ -14,7 +15,11 @@ const DataLoader = ({viewer, loader, refreshFlag}) => {
         loader().then(resp => setData(resp))
     }, [loader, refreshFlag])
     if(data) {
-        return(<Container>{viewer(data)}</Container>)
+        if(Array.isArray(data) && data.length > 0) {
+            return(<Container>{viewer(data)}</Container>)
+        }else{
+            return(<Container>Lista jest pusta</Container>)
+        }
     }else{
         return(<Container>Ładowanie...</Container>)
     }

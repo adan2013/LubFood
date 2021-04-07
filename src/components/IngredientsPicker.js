@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import NumberPicker from './NumberPicker'
@@ -12,7 +12,9 @@ const PanelContainer = styled.div`
 `
 
 const IngredientPanel = ({no, obj, onPanelChange}) => {
-
+    const [ignredientId, setIngredientId] = useState(obj ? obj.id : null)
+    const [value, setValue] = useState(obj ? obj.value : 0)
+    console.log('obj', no, obj) // TODO console log
     return(
         <PanelContainer>
 
@@ -33,6 +35,7 @@ const IngredientsList = ({count, values, onListChange}) => {
         newObj[no] = obj
         onListChange(newObj)
     }
+    console.log('list', values) // TODO console log
     for(let i = 0; i < count; i++) {
         el.push(
             <IngredientPanel key={i} no={i}
@@ -45,14 +48,14 @@ const IngredientsList = ({count, values, onListChange}) => {
 
 IngredientsList.propTypes = {
     count: PropTypes.number.isRequired,
-    values: PropTypes.object.isRequired,
+    values: PropTypes.array.isRequired,
     onListChange: PropTypes.func.isRequired,
 }
 
-const IngredientsPicker = ({initialValues, onChange}) => {
-    const [count, setCount] = useState(Object.keys(initialValues).length > 0 ? Object.keys(initialValues).length : 3)
-    const [val, setVal] = useState(initialValues)
-
+const IngredientsPicker = ({value, onChange}) => {
+    const [count, setCount] = useState(Math.max(value.length, 3))
+    const [val, setVal] = useState(value)
+    //useEffect(onChange, [val])
     return(
         <Container>
             <NumberPicker onChange={v => setCount(v)} value={count} minValue={1} maxValue={20} prefix={'Ilość: '} />
@@ -62,12 +65,12 @@ const IngredientsPicker = ({initialValues, onChange}) => {
 }
 
 IngredientsPicker.propTypes = {
-    initialValues: PropTypes.object,
+    value: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,
 }
 
 IngredientsPicker.defaultProps = {
-    initialValues: {},
+
 }
 
 export default IngredientsPicker
