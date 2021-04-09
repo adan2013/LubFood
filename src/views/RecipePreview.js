@@ -113,7 +113,7 @@ const RecipePreview = () => {
             )} />
             <ModalWindow show={deleteModalIsOpen}
                          text={'Czy chcesz usunąć cały przepis?'}
-                         onSubmit={() => deleteRecipe(category, recipe).then(() => push(`/recipes/${category}`))}
+                         onSubmit={() => deleteRecipe(recipe).then(() => push(`/recipes/${category}`))}
                          onCancel={() => setDeleteModalIsOpen(false)} />
         </>
     )
