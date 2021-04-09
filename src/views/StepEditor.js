@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 import CardTitle from '../components/CardTitle'
 import DataLoader from '../components/DataLoader'
 import RecipeStepPanel from '../components/RecipeStepPanel'
-import { getStepsFromRecipe, addStep } from '../firebase/firestore/steps'
+import { getStepsFromRecipe, updateSteps } from '../firebase/firestore/recipes'
 
 const Container = styled.div`
   text-align: center;
@@ -23,17 +23,22 @@ const NewItemButton = styled(Button)`
 const RecipeEditor = () => {
     const { category, recipe } = useParams()
 
-    const onDeleteItem = (idx, data, dataSetter) => {
-        dataSetter([])
-        dataSetter(data.filter((el, index) => index !== idx))
+    const deleteItem = (idx, data, dataSetter) => {
+        const newList = [...data]
+        newList.splice(idx, 1)
+        dataSetter(newList)
+        updateSteps(recipe, newList)
     }
-    const onClickNewItem = (data, dataSetter) => {
-        addStep(category, recipe, '', 0).then(id => {
-            dataSetter([
-                ...data,
-                { id: id.toString(), text: '', timer: 0 }
-            ])
-        })
+    const addNewItem = (data, dataSetter) => {
+        const newList = [...data, { text: '', timer: 0 }]
+        dataSetter(newList)
+        updateSteps(recipe, newList)
+    }
+    const updateItem = (idx, text, timer, data, dataSetter) => {
+        const newList = [...data]
+        newList[idx] = { text, timer }
+        dataSetter(newList)
+        updateSteps(recipe, newList)
     }
 
     return(
@@ -42,20 +47,21 @@ const RecipeEditor = () => {
                 Edycja kroków
             </CardTitle>
             <Container>
-                <DataLoader noPreventEmptyList loader={() => getStepsFromRecipe(category, recipe)} viewer={(data, dataSetter) => (
+                <DataLoader noPreventEmptyList
+                            loader={() => getStepsFromRecipe(recipe)}
+                            viewer={(data, dataSetter) => (
                     <>
                         {
                             data.map((item, idx) => (
-                                <RecipeStepPanel key={idx}
-                                                 categoryCode={category}
-                                                 recipeId={recipe}
+                                <RecipeStepPanel key={idx+item.text+item.timer}
                                                  initialValues={item}
                                                  stepCount={data.length}
                                                  no={idx+1}
-                                                 onDelete={id => onDeleteItem(id, data, dataSetter)} />
+                                                 onDelete={idx => deleteItem(idx, data, dataSetter)}
+                                                 onUpdate={(idx, text, timer) => updateItem(idx, text, timer, data, dataSetter)} />
                             ))
                         }
-                        <NewItemButton variant={'success'} onClick={() => onClickNewItem(data, dataSetter)}>
+                        <NewItemButton variant={'success'} onClick={() => addNewItem(data, dataSetter)}>
                             <FontAwesomeIcon icon={faPlusCircle} /> Nowa pozycja
                         </NewItemButton>
                     </>

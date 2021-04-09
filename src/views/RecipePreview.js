@@ -88,7 +88,7 @@ const RecipePreview = () => {
                 rightButton={{ link: `/recipes/${category}/${recipe}/cooking`, variant: `success`, icon: faPlayCircle }}>
                 Podgląd przepisu
             </CardTitle>
-            <DataLoader loader={() => getRecipe(category, recipe)} viewer={data => (
+            <DataLoader loader={() => getRecipe(recipe)} viewer={data => (
                 <>
                     <RecipeTitleContainer>
                         <Content>{data.name}</Content>
