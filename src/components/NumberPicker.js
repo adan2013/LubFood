@@ -8,8 +8,9 @@ const Container = styled.div`
 `
 
 const Btn = styled(Button)`
-  min-width: 50px;
+  min-width: 40px;
   font-weight: bold;
+  font-size: 12px;
 `
 
 const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label}) => {

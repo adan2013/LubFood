@@ -9,16 +9,16 @@ const Container = styled.div`
   font-style: italic;
 `
 
-const DataLoader = ({viewer, loader, refreshFlag}) => {
+const DataLoader = ({viewer, loader, refreshFlag, noPreventEmptyList}) => {
     const [data, setData] = useState(null)
     useEffect(() => {
         loader().then(resp => setData(resp))
     }, [loader, refreshFlag])
     if(data) {
-        if(Array.isArray(data) && data.length === 0) {
+        if(!noPreventEmptyList && Array.isArray(data) && data.length === 0) {
             return(<Container>Lista jest pusta</Container>)
         }else{
-            return(viewer(data))
+            return(viewer(data, setData))
         }
     }else{
         return(<Container>Ładowanie...</Container>)
@@ -29,10 +29,12 @@ DataLoader.propTypes = {
     viewer: PropTypes.func.isRequired,
     loader: PropTypes.func.isRequired,
     refreshFlag: PropTypes.bool,
+    noPreventEmptyList: PropTypes.bool,
 }
 
 DataLoader.defaultProps = {
     refreshFlag: false,
+    noPreventEmptyList: false,
 }
 
 export default DataLoader

@@ -24,7 +24,7 @@ const FooterMessage = styled.div`
   max-width: 400px;
 `
 
-const RecipeCreator = () => {
+const RecipeEditor = () => {
     const [name, setName] = useState('')
     const [difficult, setDifficult] = useState(1)
     const [preparationTime, setPreparationTime] = useState(0)
@@ -92,4 +92,4 @@ const RecipeCreator = () => {
     )
 }
 
-export default RecipeCreator
+export default RecipeEditor
