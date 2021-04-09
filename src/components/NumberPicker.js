@@ -19,8 +19,9 @@ const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label}
 
     const updateValue = diff => {
         setVal(v => {
-            onChange(v + diff)
-            return v + diff
+            const newValue = Math.round((v + diff) * 100) / 100
+            onChange(newValue)
+            return newValue
         })
     }
 

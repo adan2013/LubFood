@@ -1,4 +1,5 @@
 import firebase from '../firebase'
+import { getIngredientsFromRecipe } from './recipes'
 
 export const getIngredients = () => {
     return firebase.firestore().collection('ingredients').get()
@@ -22,4 +23,14 @@ export const deleteIngredient = ingredientId => {
 export const addIngredient = (name, unit) => {
     return firebase.firestore().collection('ingredients').add({ name, unit })
         .catch(err => alert(`ADD ERROR ${err.code}`))
+}
+
+export const getIngredientsFromSystemAndRecipe = recipeId => {
+    const fromRecipe = getIngredientsFromRecipe(recipeId)
+    const fromSystem = getIngredients()
+    return Promise.all([fromRecipe, fromSystem])
+        .then(data => ({
+            recipe: data[0],
+            dictionary: data[1]
+        }))
 }
