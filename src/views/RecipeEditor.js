@@ -34,7 +34,7 @@ const RecipeEditor = () => {
 
     useEffect(() => {
         if(recipe) {
-            getRecipe(category, recipe)
+            getRecipe(recipe)
                 .then(currentData => {
                     setName(currentData.name)
                     setDifficult(currentData.difficult)
