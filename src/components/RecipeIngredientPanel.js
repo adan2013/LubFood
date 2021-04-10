@@ -37,7 +37,10 @@ const DropdownSelector = styled.select`
   border-radius: 4px;
 `
 
-const getUnitName = unitCode => config.ingredientUtils.find(i => i.code === unitCode).name
+const getUnitName = unitCode => {
+    const unit = config.ingredientUtils.find(i => i.code === unitCode)
+    return unit ? unit.name : ''
+}
 
 const getUnitConfig = (dictionary, ingredientId) => {
     if(ingredientId === '' || ingredientId === undefined) return {}

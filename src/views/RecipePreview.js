@@ -10,6 +10,7 @@ import CardTitle from '../components/CardTitle'
 import { getRecipe, deleteRecipe } from '../firebase/firestore/recipes'
 import DataLoader from '../components/DataLoader'
 import ModalWindow from '../components/ModalWindow'
+import IngredientList from '../components/IngredientList'
 
 const RecipeTitleContainer = styled.div`
   margin: 50px 20px 30px;
@@ -99,7 +100,7 @@ const RecipePreview = () => {
                         </TimerContainer>
                     </RecipeTitleContainer>
                     <Title>Lista składników</Title>
-
+                    <IngredientList list={data.ingredients} addOption addAllOption exportOption />
                     <Title>Zarządzanie przepisem</Title>
                     <Content>
                         <FooterButton variant={'secondary'} block onClick={() => push(`/recipes/${category}/${recipe}/edit-recipe`)}>Edytuj przepis</FooterButton>

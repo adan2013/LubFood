@@ -1,8 +1,10 @@
 import firebase from '../firebase'
 import { getIngredientsFromRecipe } from './recipes'
 
+const INGREDIENTS_COLL = 'ingredients'
+
 export const getIngredients = () => {
-    return firebase.firestore().collection('ingredients').get()
+    return firebase.firestore().collection(INGREDIENTS_COLL).get()
         .then(collection => {
             return collection.docs
                 .map(recipe => ({ id: recipe.id, ...recipe.data() }))
@@ -16,12 +18,12 @@ export const getIngredients = () => {
 }
 
 export const deleteIngredient = ingredientId => {
-    return firebase.firestore().collection('ingredients').doc(ingredientId).delete()
+    return firebase.firestore().collection(INGREDIENTS_COLL).doc(ingredientId).delete()
         .catch(err => alert(`DELETE ERROR ${err.code}`))
 }
 
 export const addIngredient = (name, unit) => {
-    return firebase.firestore().collection('ingredients').add({ name, unit })
+    return firebase.firestore().collection(INGREDIENTS_COLL).add({ name, unit })
         .catch(err => alert(`ADD ERROR ${err.code}`))
 }
 
