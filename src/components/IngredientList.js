@@ -8,6 +8,7 @@ import {addToShoppingList, clearShoppingList, deleteFromShoppingList} from '../f
 import config from '../config'
 import copy from 'copy-to-clipboard'
 import firebase from  '../firebase/firebase'
+import ModalWindow from './ModalWindow'
 
 const ListContainer = styled.div`
   text-align: center;
@@ -25,6 +26,7 @@ const ItemContainer = styled.div`
   padding-left: 70px;
   overflow-y: hidden;
   text-align: left;
+  text-decoration: ${props => props.lineThrough ? 'line-through' : 'none'};
 `
 
 const ItemButton = styled(Button)`
@@ -41,7 +43,7 @@ const MainOptionContainer = styled(ButtonGroup)`
   padding: 0 15px;
   max-width: 600px;
   margin: 15px auto;
-  svg { margin: 0 6px; }
+  svg { margin: 0 8px; }
 `
 
 const getUnitName = unitCode => {
@@ -64,7 +66,7 @@ const convertObjects = list => {
     return []
 }
 
-const ListItem = ({ item, itemsAdded, addOption, deleteOption }) => {
+const ListItem = ({ item, itemAdded, addOption, deleteOption }) => {
     const [actionExecuted, setActionExecuted] = useState(false)
     const uid = firebase.auth().currentUser.uid
 
@@ -78,18 +80,18 @@ const ListItem = ({ item, itemsAdded, addOption, deleteOption }) => {
     }
 
     return(
-        <ItemContainer>
+        <ItemContainer lineThrough={deleteAction && actionExecuted}>
             {
                 addOption
                 &&
-                <ItemButton variant={'success'} size={'sm'} disabled={actionExecuted || itemsAdded} onClick={addAction}>
-                    <FontAwesomeIcon icon={actionExecuted || itemsAdded ? faCheck : faShoppingCart}/>
+                <ItemButton variant={'success'} size={'sm'} disabled={actionExecuted || itemAdded} onClick={addAction}>
+                    <FontAwesomeIcon icon={actionExecuted || itemAdded ? faCheck : faShoppingCart}/>
                 </ItemButton>
             }
             {
                 deleteOption
                 &&
-                <ItemButton variant={'success'} size={'sm'} disabled={actionExecuted} onClick={deleteAction}>
+                <ItemButton variant={'danger'} size={'sm'} disabled={actionExecuted} onClick={deleteAction}>
                     <FontAwesomeIcon icon={faTrash}/>
                 </ItemButton>
             }
@@ -100,7 +102,7 @@ const ListItem = ({ item, itemsAdded, addOption, deleteOption }) => {
 
 ListItem.propTypes = {
     item: PropTypes.string.isRequired,
-    itemsAdded: PropTypes.bool,
+    itemAdded: PropTypes.bool,
     addOption: PropTypes.bool,
     deleteOption: PropTypes.bool,
 }
@@ -108,6 +110,7 @@ ListItem.propTypes = {
 const IngredientList = (props) => {
     const [list, setList] = useState(convertObjects(props.list))
     const [itemsAdded, setItemsAdded] = useState(false)
+    const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
     const [dataCopied, setDataCopied] = useState(false)
     const uid = firebase.auth().currentUser.uid
 
@@ -116,6 +119,8 @@ const IngredientList = (props) => {
         addToShoppingList(uid, list)
     }
     const deleteAll = () => {
+        setDeleteModalIsOpen(false)
+        setList([])
         clearShoppingList(uid)
     }
     const copyToClipboard = () => {
@@ -137,7 +142,7 @@ const IngredientList = (props) => {
                 {
                     props.clearOption
                     &&
-                    <Button variant={'danger'} onClick={deleteAll} disabled={list.length === 0}>
+                    <Button variant={'danger'} onClick={() => setDeleteModalIsOpen(true)} disabled={list.length === 0}>
                         <FontAwesomeIcon icon={faTrash}/>Wyczyść
                     </Button>
                 }
@@ -145,7 +150,7 @@ const IngredientList = (props) => {
                     props.exportOption
                     &&
                     <Button variant={'warning'} onClick={copyToClipboard} disabled={dataCopied || list.length === 0}>
-                        <FontAwesomeIcon icon={dataCopied ? faCheck : faClipboard}/>{dataCopied ? 'Zapisano!' : 'Zapisz w schowku'}
+                        <FontAwesomeIcon icon={dataCopied ? faCheck : faClipboard}/>{dataCopied ? 'Zapisano!' : 'Do schowka'}
                     </Button>
                 }
             </MainOptionContainer>
@@ -155,6 +160,10 @@ const IngredientList = (props) => {
                 ))
             }
             {list.length === 0 && <i>(lista jest pusta)</i>}
+            <ModalWindow show={deleteModalIsOpen}
+                         onSubmit={deleteAll}
+                         onCancel={() => setDeleteModalIsOpen(false)}
+                         text={'Czy chcesz usunąć całą listę zakupów?'} />
         </ListContainer>
     )
 }

@@ -13,7 +13,10 @@ export const updateShoppingList = (uid, list) => {
         .catch(err => alert(`UPDATE ERROR ${err.code}`))
 }
 
-export const clearShoppingList = uid => updateShoppingList(uid, [])
+export const clearShoppingList = uid => {
+    return firebase.firestore().collection(SHOPPING_LIST_COLL).doc(uid).set({ list: [] })
+        .catch(err => alert(`SET ERROR ${err.code}`))
+}
 
 export const addToShoppingList = (uid, obj) => {
     return firebase.firestore().collection(SHOPPING_LIST_COLL).doc(uid).set({
