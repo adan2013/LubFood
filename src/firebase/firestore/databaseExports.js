@@ -1,21 +1,27 @@
 import firebase from '../firebase'
-import config from '../../config'
 
-export const exportRecipes = () => {
-    const promises = config.categories.map(category => (
-        firebase.firestore().collection(category.code).get()
-    ))
-    return Promise.all(promises)
-        .then(recipes => {
-            return recipes.map(recipe => JSON.stringify(recipe.data()))
-        })
-        .catch(err => alert(`EXPORT ERROR ${err.code}`))
+const RECIPES_COLL = 'recipes'
+const INGREDIENTS_COLL = 'ingredients'
+const SHOPPING_LIST_COLL = 'shoppingList'
+
+const exportDataFromCollection = (collectionName, docName = '') => {
+    if(docName === '') {
+        return firebase.firestore().collection(collectionName).get()
+            .then(collection => (
+                JSON.stringify(collection.docs.map(doc => ({ id: doc.id, data: doc.data() })))
+            ))
+            .catch(err => alert(`EXPORT ERROR ${err.code}`))
+    }else{
+        return firebase.firestore().collection(collectionName).doc(docName).get()
+            .then(doc => (
+                JSON.stringify({ id: doc.id, data: doc.data() })
+            ))
+            .catch(err => alert(`EXPORT ERROR ${err.code}`))
+    }
 }
 
-export const exportIngredients = () => {
-    //TODO export ingredients
-}
+export const exportRecipes = () => exportDataFromCollection(RECIPES_COLL)
 
-export const exportShopingList = uid => {
-    //TODO export shoping list
-}
+export const exportIngredients = () => exportDataFromCollection(INGREDIENTS_COLL)
+
+export const exportShopingList = uid => exportDataFromCollection(SHOPPING_LIST_COLL, uid)
