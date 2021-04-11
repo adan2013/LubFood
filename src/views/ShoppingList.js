@@ -13,7 +13,7 @@ const ShoppingList = () => {
             <CardTitle>Lista zakupów</CardTitle>
             <DataLoader loader={() => getShoppingList(uid)} viewer={data => (
                 <>
-                    <IngredientList list={data} deleteOption clearOption exportOption />
+                    <IngredientList list={data} deleteOption clearOption exportOption manualAdder />
                 </>
             )}/>
         </>

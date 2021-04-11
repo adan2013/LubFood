@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Button, ButtonGroup } from 'react-bootstrap'
+import { Button, ButtonGroup, Form, InputGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faShoppingCart, faClipboard, faTrash } from '@fortawesome/free-solid-svg-icons'
 import {addToShoppingList, clearShoppingList, deleteFromShoppingList} from '../firebase/firestore/shoppingList'
@@ -46,6 +46,11 @@ const MainOptionContainer = styled(ButtonGroup)`
   svg { margin: 0 8px; }
 `
 
+const ManualAdder = styled(InputGroup)`
+  margin: 15px auto;
+  max-width: 600px;
+`
+
 const getUnitName = unitCode => {
     const unit = config.ingredientUtils.find(i => i.code === unitCode)
     return unit ? unit.name : ''
@@ -80,7 +85,7 @@ const ListItem = ({ item, itemAdded, addOption, deleteOption }) => {
     }
 
     return(
-        <ItemContainer lineThrough={deleteAction && actionExecuted}>
+        <ItemContainer lineThrough={deleteOption && actionExecuted}>
             {
                 addOption
                 &&
@@ -112,6 +117,7 @@ const IngredientList = (props) => {
     const [itemsAdded, setItemsAdded] = useState(false)
     const [deleteModalIsOpen, setDeleteModalIsOpen] = useState(false)
     const [dataCopied, setDataCopied] = useState(false)
+    const [customItem, setCustomItem] = useState('')
     const uid = firebase.auth().currentUser.uid
 
     const addAll = () => {
@@ -127,6 +133,14 @@ const IngredientList = (props) => {
         setDataCopied(true)
         copy(list.join('\n'))
         setTimeout(() => setDataCopied(false), 2000)
+    }
+    const addCustomItem = () => {
+        setList([
+            ...list,
+            customItem
+        ])
+        addToShoppingList(uid, customItem)
+        setCustomItem('')
     }
 
     return(
@@ -160,6 +174,23 @@ const IngredientList = (props) => {
                 ))
             }
             {list.length === 0 && <i>(lista jest pusta)</i>}
+            {
+                props.manualAdder
+                &&
+                <ManualAdder>
+                    <Form.Control type={'text'}
+                                  value={customItem}
+                                  onChange={e => setCustomItem(e.target.value)} placeholder={'Nowa pozycja'}
+                                  maxLength={'50'} />
+                    <InputGroup.Append>
+                        <Button variant={'success'}
+                                onClick={addCustomItem}
+                                disabled={customItem.length < 5}>
+                            Dodaj
+                        </Button>
+                    </InputGroup.Append>
+                </ManualAdder>
+            }
             <ModalWindow show={deleteModalIsOpen}
                          onSubmit={deleteAll}
                          onCancel={() => setDeleteModalIsOpen(false)}
@@ -175,10 +206,7 @@ IngredientList.propTypes = {
     exportOption: PropTypes.bool,
     addAllOption: PropTypes.bool,
     clearOption: PropTypes.bool,
-}
-
-IngredientList.defaultProps = {
-
+    manualAdder: PropTypes.bool,
 }
 
 export default IngredientList
