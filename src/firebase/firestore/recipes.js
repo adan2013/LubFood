@@ -30,6 +30,16 @@ export const getRecipe = recipeId => {
         .catch(err => alert(`GET ERROR ${err.code}`))
 }
 
+export const getAllRecipes = () => {
+    return firebase.firestore().collection(RECIPES_COLL).get()
+        .then(docs => {
+            let data = []
+            docs.forEach(recipe => { data.push({ id: recipe.id, ...recipe.data() }) })
+            return data
+        })
+        .catch(err => alert(`SEARCH ERROR ${err.code}`))
+}
+
 export const deleteRecipe = recipeId => {
     return firebase.firestore().collection(RECIPES_COLL).doc(recipeId).delete()
         .catch(err => alert(`DELETE ERROR ${err.code}`))
