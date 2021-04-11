@@ -13,7 +13,7 @@ const Btn = styled(Button)`
   font-size: 12px;
 `
 
-const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label}) => {
+const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label, zeroCustomText}) => {
     const [val, setVal] = useState(value)
     useEffect(() => setVal(value), [value])
 
@@ -44,7 +44,7 @@ const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label}
                     </InputGroup.Prepend>
                 }
                 <Form.Control type={'text'}
-                              value={`${prefix}${val}${label}`}
+                              value={val === 0 && zeroCustomText ? zeroCustomText : `${prefix}${val}${label}`}
                               style={{textAlign: 'center'}}
                               readOnly />
                 {
@@ -75,6 +75,7 @@ NumberPicker.propTypes = {
     onChange: PropTypes.func.isRequired,
     prefix: PropTypes.string,
     label: PropTypes.string,
+    zeroCustomText: PropTypes.string,
 }
 
 NumberPicker.defaultProps = {

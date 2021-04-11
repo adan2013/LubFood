@@ -173,7 +173,7 @@ const IngredientList = (props) => {
                     <ListItem key={item} item={item} itemsAdded={itemsAdded} {...props} />
                 ))
             }
-            {list.length === 0 && <i>(lista jest pusta)</i>}
+            {list.length === 0 && <i>(lista składników jest pusta)</i>}
             {
                 props.manualAdder
                 &&

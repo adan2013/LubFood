@@ -68,7 +68,13 @@ const RecipeStepPanel = ({no, stepCount, initialValues, onDelete, onUpdate}) => 
             {modified && <CornerButton variant={'success'} size={'sm'} onClick={onSaveChanges}><FontAwesomeIcon icon={faCheck}/></CornerButton>}
             <Textarea value={text} onChange={onTextChange} maxLength={400} />
             <TextareaCounter>{text.length}/400</TextareaCounter>
-            <NumberPicker value={timer} onChange={onTimerChange} step={[1, 10]} maxValue={180} prefix={'Timer: '} label={' min'} />
+            <NumberPicker value={timer}
+                          onChange={onTimerChange}
+                          step={[1, 10]}
+                          maxValue={180}
+                          prefix={'Timer: '}
+                          label={' min'}
+                          zeroCustomText={'Timer wył.'} />
             <ModalWindow show={deleteModalIsOpen}
                          onSubmit={() => onDelete(no - 1)}
                          onCancel={() => setDeleteModalIsOpen(false)}

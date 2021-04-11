@@ -25,7 +25,7 @@ const Title = styled.div`
 const Content = styled.div`
   text-align: center;
   font-weight: bold;
-  margin: 6px 20px 0 20px;
+  margin: 6px 0 0 0;
 `
 
 const TimerContainer = styled.div`
@@ -45,7 +45,7 @@ const SingleTimerContainer = styled.div`
 
 const FooterButton = styled(Button)`
   min-width: 200px;
-  max-width: 450px;
+  max-width: 600px;
   margin: 5px auto;
   svg { margin-right: 6px; }
 `
