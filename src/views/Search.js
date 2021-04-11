@@ -75,13 +75,9 @@ const Search = () => {
                               maxLength={'30'} />
             </SearchGroup>
             <SearchGroup>
-                <DataLoader noPreventEmptyList loader={getAllRecipes} viewer={data => {
-                    if(searchText.length >= 3) {
-                        return <SearchResultPanels searchQuery={searchText} recipes={data} historyHook={history} />
-                    }else{
-                        return <></>
-                    }
-                }} />
+                <DataLoader noPreventEmptyList loader={getAllRecipes} viewer={data => (
+                    searchText.length > 3 && <SearchResultPanels searchQuery={searchText} recipes={data} historyHook={history} />
+                )} />
             </SearchGroup>
         </>
     )
