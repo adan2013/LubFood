@@ -14,7 +14,7 @@ import CookingPopupPanel from '../components/CookingPopupPanel'
 
 const TextContainer = styled.div`
   font-size: ${props => props.fontSize + 'px'};
-  padding: 20px;
+  padding: 20px 20px 240px;
 `
 
 const ControlButtonMainContainer = styled.div`
