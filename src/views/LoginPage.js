@@ -10,7 +10,7 @@ import logo from '../lubfoodlogo.png'
 import {authorizationIsInProgress, authorizationStart} from '../firebase/authorizationProgressFlag'
 
 const LoginForm = styled.div`
-background-color: #00adb5;
+background-color: #393e46;
 width: 100vw;
 max-width: 800px;
 height: 100vh;
