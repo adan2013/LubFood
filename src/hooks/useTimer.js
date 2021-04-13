@@ -3,8 +3,10 @@ import { useState, useEffect, useRef } from 'react'
 const useTimer = (onTimeOver) => {
     const [status, setStatus] = useState({
         isRunning: false,
+        startTime: 0,
         initialTime: 0,
         timeLeft: 0,
+        lastSetTimeValue: 0,
     })
     const intervalRef = useRef()
 
@@ -21,7 +23,7 @@ const useTimer = (onTimeOver) => {
             }else{
                 return {
                     ...current,
-                    timeLeft: current.timeLeft - 1
+                    timeLeft: Math.floor(current.initialTime - (new Date() - current.startTime.getTime()) / 1000)
                 }
             }
         })
@@ -36,7 +38,8 @@ const useTimer = (onTimeOver) => {
 
     const startService = () => {
         if(!intervalRef.current) {
-            intervalRef.current = setInterval(update, 1000)
+            intervalRef.current = setInterval(update, 100)
+            update()
         }
     }
 
@@ -45,6 +48,8 @@ const useTimer = (onTimeOver) => {
             setStatus(current => ({
                 ...current,
                 isRunning: true,
+                initialTime: current.timeLeft,
+                startTime: new Date(),
             }))
             startService()
         }
@@ -64,7 +69,9 @@ const useTimer = (onTimeOver) => {
         setStatus(current => ({
             ...current,
             isRunning: autoPause ? false : current.isRunning,
-            timeLeft: current.initialTime,
+            startTime: new Date(),
+            initialTime: current.lastSetTimeValue,
+            timeLeft: current.lastSetTimeValue,
         }))
         if(autoPause) stopService()
     }
@@ -72,8 +79,10 @@ const useTimer = (onTimeOver) => {
     const setTime = (newTime, autoStart = false) => {
         setStatus({
             isRunning: false,
+            startTime: 0,
             initialTime: newTime,
             timeLeft: newTime,
+            lastSetTimeValue: newTime,
         })
         stopService()
         if(autoStart) play()

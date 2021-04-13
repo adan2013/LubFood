@@ -101,7 +101,8 @@ const Cooking = () => {
                     <CookingPopupPanel popupMode={popupMode}
                                        stepTimerValue={data.steps[stepNumber].timer}
                                        fontSize={fontSize}
-                                       onFontSizeChange={v => setFontSize(v)} />
+                                       onFontSizeChange={v => setFontSize(v)}
+                                       onTimeOver={() => {setTimeout(() => setPopupMode('TIMER'), 0)}} />
                     <ControlButtonMainContainer>
                         <ControlButtonRowContainer>
                             <ControlButton icon={faCarrot}

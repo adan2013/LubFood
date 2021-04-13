@@ -49,6 +49,7 @@ const SideButton = styled(Button)`
 `
 
 const generateTimerString = timeLeft => {
+    if(timeLeft === 0) return `-:--:--`
     let h = Math.floor(timeLeft / 3600)
     let m = Math.floor(timeLeft / 60)
     let s = Math.floor(timeLeft - h * 3600 - m * 60)
@@ -57,9 +58,9 @@ const generateTimerString = timeLeft => {
     return `${h}:${m}:${s}`
 }
 
-const CookingPopupPanel = ({popupMode, stepTimerValue, fontSize, onFontSizeChange}) => {
+const CookingPopupPanel = ({popupMode, stepTimerValue, fontSize, onFontSizeChange, onTimeOver}) => {
     const { isRunning, timeLeft, play, pause, setTime, } = useTimer(() => {
-        console.log('END') // TODO console log
+        if(onTimeOver) onTimeOver()
     })
 
     useEffect(() => {
@@ -115,6 +116,7 @@ CookingPopupPanel.propTypes = {
     stepTimerValue: PropTypes.number.isRequired,
     fontSize: PropTypes.number.isRequired,
     onFontSizeChange: PropTypes.func.isRequired,
+    onTimeOver: PropTypes.func,
 }
 
 CookingPopupPanel.defaultProps = {

@@ -48,7 +48,7 @@ const RecipeEditor = () => {
 
     const onSubmitButtonClick = () => {
         if(recipe) {
-            updateRecipe(category, recipe, name, difficult, preparationTime, cookingTime)
+            updateRecipe(recipe, name, difficult, preparationTime, cookingTime)
                 .then(() => history.push(`/recipes/${category}/${recipe}`))
         }else{
             addRecipe(category, name, difficult, preparationTime, cookingTime)
