@@ -1,6 +1,7 @@
 import CategoryBrowser from './views/CategoryBrowser'
 import RecipeBrowser from './views/RecipeBrowser'
 import RecipePreview from './views/RecipePreview'
+import Cooking from './views/Cooking'
 import RecipeEditor from './views/RecipeEditor'
 import IngredientEditor from './views/IngredientEditor'
 import StepEditor from './views/StepEditor'
@@ -14,6 +15,7 @@ export default [
     { path: '/recipes/:category', exact: true, name: 'Przepisy', component: RecipeBrowser },
     { path: '/recipes/:category/add', exact: true, name: 'Nowy przepis', component: RecipeEditor },
     { path: '/recipes/:category/:recipe', exact: true, name: 'Podgląd przepisu', component: RecipePreview },
+    { path: '/recipes/:category/:recipe/cooking', exact: true, name: 'Tryb gotowania', component: Cooking },
     { path: '/recipes/:category/:recipe/edit-recipe', exact: true, name: 'Edycja przepisu', component: RecipeEditor },
     { path: '/recipes/:category/:recipe/edit-ingredients', exact: true, name: 'Edycja składników przepisu', component: IngredientEditor },
     { path: '/recipes/:category/:recipe/edit-steps', exact: true, name: 'Edycja kroków przepisu', component: StepEditor },

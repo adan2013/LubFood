@@ -84,13 +84,13 @@ const RecipePreview = () => {
 
     return (
         <>
-            <CardTitle
-                leftButton={{ link: `/recipes/${category}`, variant: `light`, icon: faChevronLeft }}
-                rightButton={{ link: `/recipes/${category}/${recipe}/cooking`, variant: `success`, icon: faPlayCircle }}>
-                Podgląd przepisu
-            </CardTitle>
             <DataLoader loader={() => getRecipe(recipe)} viewer={data => (
                 <>
+                    <CardTitle
+                        leftButton={{ link: `/recipes/${category}`, variant: `light`, icon: faChevronLeft }}
+                        rightButton={data.steps.length > 0 && { link: `/recipes/${category}/${recipe}/cooking`, variant: `success`, icon: faPlayCircle }}>
+                        Podgląd przepisu
+                    </CardTitle>
                     <RecipeTitleContainer>
                         <Content>{data.name}</Content>
                         <DifficultMeter level={data.difficult} />
