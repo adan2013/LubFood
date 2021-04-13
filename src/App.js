@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import {
-  BrowserRouter,
+  HashRouter,
   Switch,
   Route,
   Redirect
@@ -38,14 +38,14 @@ const PrivateRoute = () => {
 }
 
 const App = () => (
-    <BrowserRouter>
+    <HashRouter>
       <React.Suspense fallback={() => <span>Loading...</span>}>
         <Switch>
           <Route exact path="/" name="Login Page" render={props => <LoginPage {...props} />} />
           <PrivateRoute/>
         </Switch>
       </React.Suspense>
-    </BrowserRouter>
+    </HashRouter>
 )
 
 export default App
