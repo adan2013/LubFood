@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/LubFood/static/css/main.b36d2e49.chunk.css",
-    "main.js": "/LubFood/static/js/main.3c0be618.chunk.js",
-    "main.js.map": "/LubFood/static/js/main.3c0be618.chunk.js.map",
+    "main.js": "/LubFood/static/js/main.c0699e18.chunk.js",
+    "main.js.map": "/LubFood/static/js/main.c0699e18.chunk.js.map",
     "runtime-main.js": "/LubFood/static/js/runtime-main.8a1536f5.js",
     "runtime-main.js.map": "/LubFood/static/js/runtime-main.8a1536f5.js.map",
     "static/css/2.4c97ca4f.chunk.css": "/LubFood/static/css/2.4c97ca4f.chunk.css",
@@ -21,6 +21,6 @@
     "static/css/2.4c97ca4f.chunk.css",
     "static/js/2.71248773.chunk.js",
     "static/css/main.b36d2e49.chunk.css",
-    "static/js/main.3c0be618.chunk.js"
+    "static/js/main.c0699e18.chunk.js"
   ]
 }
