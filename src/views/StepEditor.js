@@ -10,14 +10,14 @@ import RecipeStepPanel from '../components/RecipeStepPanel'
 import { getStepsFromRecipe, updateSteps } from '../firebase/firestore/recipes'
 
 const Container = styled.div`
-  text-align: center;
-  padding: 10px;
-  svg { margin: 0 4px; }
+    text-align: center;
+    padding: 10px;
+    svg { margin: 0 4px; }
 `
 
 const NewItemButton = styled(Button)`
-  margin-top: 10px;
-  width: 200px;
+    margin-top: 10px;
+    width: 200px;
 `
 
 const RecipeEditor = () => {

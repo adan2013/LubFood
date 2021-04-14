@@ -10,31 +10,31 @@ import { getRecipesFromCategory } from '../firebase/firestore/recipes'
 import DataLoader from '../components/DataLoader'
 
 const ButtonGroup = styled.div`
-  padding: 10px;
+    padding: 10px;
 `
 
 const RecipeButton = styled(Button)`
-  position: relative;
-  text-align: left;
-  line-height: 40px;
-  margin-bottom: 12px;
+    position: relative;
+    text-align: left;
+    line-height: 40px;
+    margin-bottom: 12px;
 `
 
 const CategoryArrowIcon = styled(FontAwesomeIcon)`
-  position: absolute;
-  right: 20px;
-  margin-top: 20px;
-  transform: translateY(-50%);
+    position: absolute;
+    right: 20px;
+    margin-top: 20px;
+    transform: translateY(-50%);
 `
 
 const RecipeBrowser = () => {
     const history = useHistory()
     const { category } = useParams()
+
     return(
         <>
-            <CardTitle
-                leftButton={{ link: `/recipes`, variant: `light`, icon: faChevronLeft }}
-                rightButton={{ link: `/recipes/${category}/add`, variant: `success`, icon: faPlusCircle }}>
+            <CardTitle leftButton={{ link: `/recipes`, variant: `light`, icon: faChevronLeft }}
+                       rightButton={{ link: `/recipes/${category}/add`, variant: `success`, icon: faPlusCircle }}>
                 {config.categories.find(c => c.code === category).name}
             </CardTitle>
             <DataLoader loader={() => getRecipesFromCategory(category)}

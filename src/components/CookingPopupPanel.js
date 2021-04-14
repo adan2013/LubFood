@@ -10,42 +10,42 @@ const MIN_FONT_SIZE = 18
 const MAX_FONT_SIZE = 50
 
 const PopupMainContainer = styled.div`
-  display: ${props => props.hide ? 'none' : 'block'};
-  position: fixed;
-  left: 0;
-  bottom: 180px;
-  width: 100%;
+    display: ${props => props.hide ? 'none' : 'block'};
+    position: fixed;
+    left: 0;
+    bottom: 180px;
+    width: 100%;
 `
 
 const PopupContainer = styled.div`
-  position: relative;
-  background-color: #fff;
-  border-radius: 5px;
-  width: 320px;
-  max-width: 90vw;
-  height: 90px;
-  margin: 0 auto;
-  color: #000;
+    position: relative;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 320px;
+    max-width: 90vw;
+    height: 90px;
+    margin: 0 auto;
+    color: #000;
 `
 
 const Title = styled.div`
-  text-align: center;
-  font-weight: bold;
-  padding: 8px 0;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px 0;
 `
 
 const CenterText = styled.div`
-  text-align: center;
-  font-size: 2rem;
-  position: relative;
-  bottom: 6px;
-  margin: 0 70px;
+    text-align: center;
+    font-size: 2rem;
+    position: relative;
+    bottom: 6px;
+    margin: 0 70px;
 `
 
 const SideButton = styled(Button)`
-  position: absolute;
-  left: ${props => props.onRight ? 'inherit' : '10px'};
-  right: ${props => props.onRight ? '10px' : 'inherit'};
+    position: absolute;
+    left: ${props => props.onRight ? 'inherit' : '10px'};
+    right: ${props => props.onRight ? '10px' : 'inherit'};
 `
 
 const generateTimerString = timeLeft => {
@@ -90,7 +90,7 @@ const CookingPopupPanel = ({popupMode, stepTimerValue, fontSize, onFontSizeChang
                             <SideButton variant={'secondary'} onClick={playPauseButton}>
                                 <FontAwesomeIcon icon={isRunning ? faPause : faPlay}/>
                             </SideButton>
-                            <SideButton variant={'secondary'} onRight disabled={isRunning} onClick={resetButton}>
+                            <SideButton variant={'secondary'} disabled={isRunning} onClick={resetButton} onRight>
                                 <FontAwesomeIcon icon={faUndo}/>
                             </SideButton>
                             <CenterText>{generateTimerString(timeLeft)}</CenterText>
@@ -100,7 +100,7 @@ const CookingPopupPanel = ({popupMode, stepTimerValue, fontSize, onFontSizeChang
                             <SideButton variant={'secondary'} disabled={fontSize - 2 < MIN_FONT_SIZE} onClick={() => onFontSizeChange(fontSize - 2)}>
                                 <FontAwesomeIcon icon={faMinus}/>
                             </SideButton>
-                            <SideButton variant={'secondary'} onRight disabled={fontSize + 2 > MAX_FONT_SIZE} onClick={() => onFontSizeChange(fontSize + 2)}>
+                            <SideButton variant={'secondary'} disabled={fontSize + 2 > MAX_FONT_SIZE} onClick={() => onFontSizeChange(fontSize + 2)} onRight>
                                 <FontAwesomeIcon icon={faPlus}/>
                             </SideButton>
                             <CenterText>{fontSize}</CenterText>

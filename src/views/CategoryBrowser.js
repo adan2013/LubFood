@@ -8,25 +8,26 @@ import { useHistory } from 'react-router-dom'
 import CardTitle from '../components/CardTitle'
 
 const ButtonGroup = styled.div`
-  padding: 10px;
+    padding: 10px;
 `
 
 const CategoryButton = styled(Button)`
-  position: relative;
-  text-align: left;
-  line-height: 40px;
-  margin-bottom: 12px;
+    position: relative;
+    text-align: left;
+    line-height: 40px;
+    margin-bottom: 12px;
 `
 
 const CategoryArrowIcon = styled(FontAwesomeIcon)`
-  position: absolute;
-  right: 20px;
-  margin-top: 20px;
-  transform: translateY(-50%);
+    position: absolute;
+    right: 20px;
+    margin-top: 20px;
+    transform: translateY(-50%);
 `
 
 const CategoryBrowser = () => {
     const history = useHistory()
+
     return(
         <>
             <CardTitle>Wybierz kategorię</CardTitle>

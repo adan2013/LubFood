@@ -13,41 +13,42 @@ import ModalWindow from '../components/ModalWindow'
 import IngredientList from '../components/IngredientList'
 
 const RecipeTitleContainer = styled.div`
-  margin: 50px 20px 30px;
-  font-size: 1.2rem;
+    margin: 50px 20px 30px;
+    font-size: 1.2rem;
 `
 
 const Title = styled.div`
-  text-align: center;
-  margin-top: 14px;
+    text-align: center;
+    margin-top: 14px;
 `
 
 const Content = styled.div`
-  text-align: center;
-  font-weight: bold;
-  margin: 6px 0 0 0;
+    text-align: center;
+    font-weight: bold;
+    margin: 6px 0 0 0;
 `
 
 const TimerContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
 `
 
 const SingleTimerContainer = styled.div`
-  flex: 1;
-  font-size: 14px;
-  text-align: center;
-  div {
-    font-size: 3rem;
-  }
+    flex: 1;
+    font-size: 14px;
+    text-align: center;
+  
+    div {
+        font-size: 3rem;
+    }
 `
 
 const FooterButton = styled(Button)`
-  min-width: 200px;
-  max-width: 600px;
-  margin: 5px auto;
-  svg { margin-right: 6px; }
+    min-width: 200px;
+    max-width: 600px;
+    margin: 5px auto;
+    svg { margin-right: 6px; }
 `
 
 const DifficultMeter = ({level}) => (
@@ -86,21 +87,25 @@ const RecipePreview = () => {
         <>
             <DataLoader loader={() => getRecipe(recipe)} viewer={data => (
                 <>
-                    <CardTitle
-                        leftButton={{ link: `/recipes/${category}`, variant: `light`, icon: faChevronLeft }}
-                        rightButton={data.steps.length > 0 && { link: `/recipes/${category}/${recipe}/cooking`, variant: `success`, icon: faPlayCircle }}>
+                    <CardTitle leftButton={{ link: `/recipes/${category}`, variant: `light`, icon: faChevronLeft }}
+                               rightButton={data.steps.length > 0 && { link: `/recipes/${category}/${recipe}/cooking`, variant: `success`, icon: faPlayCircle }}>
                         Podgląd przepisu
                     </CardTitle>
+
                     <RecipeTitleContainer>
                         <Content>{data.name}</Content>
                         <DifficultMeter level={data.difficult} />
                         <TimerContainer>
-                            <TimeDisplay minutes={data.preparationTime} description={'Czas przygotowywania'} />
-                            <TimeDisplay minutes={data.cookingTime} description={'Czas gotowania'} />
+                            <TimeDisplay minutes={data.preparationTime}
+                                         description={'Czas przygotowywania'} />
+                            <TimeDisplay minutes={data.cookingTime}
+                                         description={'Czas gotowania'} />
                         </TimerContainer>
                     </RecipeTitleContainer>
+
                     <Title>Lista składników</Title>
                     <IngredientList list={data.ingredients} addOption addAllOption exportOption />
+
                     <Title>Zarządzanie przepisem</Title>
                     <Content>
                         <FooterButton variant={'secondary'} block onClick={() => push(`/recipes/${category}/${recipe}/edit-recipe`)}>Edytuj przepis</FooterButton>

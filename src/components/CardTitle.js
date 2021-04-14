@@ -6,18 +6,18 @@ import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 
 const Container = styled.div`
-  position: relative;
-  text-align: center;
-  margin: 10px auto;
-  font-size: 24px;
-  font-weight: bold;
+    position: relative;
+    text-align: center;
+    margin: 10px auto;
+    font-size: 24px;
+    font-weight: bold;
 `
 
 const Btn = styled(Button)`
-  position: absolute;
-  min-width: 60px;
-  left: ${props => props.onRight ? 'inherit' : '10px'};
-  right: ${props => props.onRight ? '10px' : 'inherit'};
+    position: absolute;
+    min-width: 60px;
+    left: ${props => props.onRight ? 'inherit' : '10px'};
+    right: ${props => props.onRight ? '10px' : 'inherit'};
 `
 
 const SideButton = ({ onRight, buttonObj }) => {
@@ -42,16 +42,13 @@ SideButton.defaultProps = {
     onRight: false
 }
 
-const CardTitle = ({children, leftButton, rightButton}) => {
-
-    return(
-        <Container>
-            <SideButton buttonObj={leftButton}/>
-            {children}
-            <SideButton onRight buttonObj={rightButton}/>
-        </Container>
-    )
-}
+const CardTitle = ({children, leftButton, rightButton}) => (
+    <Container>
+        <SideButton buttonObj={leftButton}/>
+        {children}
+        <SideButton onRight buttonObj={rightButton}/>
+    </Container>
+)
 
 CardTitle.propTypes = {
     children: PropTypes.string.isRequired,

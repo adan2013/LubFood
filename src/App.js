@@ -5,13 +5,14 @@ import {
   Route,
   Redirect
 } from 'react-router-dom'
- import LoginPage from './views/LoginPage'
- import Layout from './components/Layout'
- import routes from './routes'
-import {UserContext} from './firebase/UserContext'
+import LoginPage from './views/LoginPage'
+import Layout from './components/Layout'
+import routes from './routes'
+import { UserContext } from './firebase/UserContext'
 
 const PrivateRoute = () => {
     const authorized = useContext(UserContext)
+
     if(authorized) {
         return (
             <Layout>

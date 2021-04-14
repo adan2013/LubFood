@@ -1,8 +1,8 @@
 import React, {useContext, useState} from 'react'
 import styled from 'styled-components'
-import {Button} from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import firebase from 'firebase'
-import {UserContext} from '../firebase/UserContext'
+import { UserContext } from '../firebase/UserContext'
 import {
     exportRecipes,
     exportIngredients,
@@ -10,16 +10,17 @@ import {
 } from '../firebase/firestore/databaseExports'
 
 const Panel = styled.div`
-  text-align: center;
-  margin: 50px 20px 0 20px;
+    text-align: center;
+    margin: 50px 20px 0 20px;
 `
 
-const Btn = styled(Button)`
-margin-top: 25px;
+const StyledButton = styled(Button)`
+    margin-top: 25px;
 `
 
 const logout = () => {
-    firebase.auth().signOut().catch(err => alert(`AUTH ERROR: ${err}`))
+    firebase.auth().signOut()
+        .catch(err => alert(`AUTH ERROR: ${err}`))
 }
 
 const ProfilePage = () => {
@@ -27,6 +28,7 @@ const ProfilePage = () => {
     const [exportData, setExportData] = useState(null)
     const [fetchingInProgress, setFetchingInProgress] = useState(false)
     const [fileName, setFileName] = useState('exportdata')
+
     const fetchData = typeID => {
         setExportData(null)
         setFetchingInProgress(true)
@@ -69,22 +71,22 @@ const ProfilePage = () => {
         <>
             <Panel>
                 <b>Zalogowano jako:</b><br />{user.displayName}<br/>{user.email}
-                <Btn variant={'danger'} block onClick={logout}>Wyloguj z systemu</Btn>
+                <StyledButton variant={'danger'} block onClick={logout}>Wyloguj z systemu</StyledButton>
             </Panel>
             <Panel>
-                <Btn variant={'light'} block onClick={clickExportRecipes}>Eksportuj przepisy</Btn>
-                <Btn variant={'light'} block onClick={clickExportIngredients}>Eksportuj składniki</Btn>
-                <Btn variant={'light'} block onClick={clickExportShopingList}>Eksportuj listę zakupów</Btn>
+                <StyledButton variant={'light'} block onClick={clickExportRecipes}>Eksportuj przepisy</StyledButton>
+                <StyledButton variant={'light'} block onClick={clickExportIngredients}>Eksportuj składniki</StyledButton>
+                <StyledButton variant={'light'} block onClick={clickExportShopingList}>Eksportuj listę zakupów</StyledButton>
                 {
                     fetchingInProgress
                     &&
-                    <Btn variant={'warning'}
-                         block
-                         onClick={downloadExportData}
-                         style={{marginTop: '20px'}}
-                         disabled={exportData === null}>
+                    <StyledButton variant={'warning'}
+                                  block
+                                  onClick={downloadExportData}
+                                  style={{marginTop: '20px'}}
+                                  disabled={exportData === null}>
                         {exportData === null ? 'Pobieranie...' : 'Pobierz plik z danymi'}
-                    </Btn>
+                    </StyledButton>
                 }
             </Panel>
         </>

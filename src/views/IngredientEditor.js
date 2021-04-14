@@ -9,19 +9,18 @@ import DataLoader from '../components/DataLoader'
 import RecipeIngredientPanel from '../components/RecipeIngredientPanel'
 import { updateIngredients } from '../firebase/firestore/recipes'
 import { getIngredientsFromSystemAndRecipe } from '../firebase/firestore/ingredients'
+import cloneObject from '../utils/cloneObject'
 
 const Container = styled.div`
-  text-align: center;
-  padding: 10px;
-  svg { margin: 0 4px; }
+    text-align: center;
+    padding: 10px;
+    svg { margin: 0 4px; }
 `
 
 const NewItemButton = styled(Button)`
-  margin-top: 10px;
-  width: 200px;
+    margin-top: 10px;
+    width: 200px;
 `
-
-const cloneObject = obj => JSON.parse(JSON.stringify(obj))
 
 const IngredientEditor = () => {
     const { category, recipe } = useParams()

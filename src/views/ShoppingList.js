@@ -11,10 +11,10 @@ const ShoppingList = () => {
     return(
         <>
             <CardTitle>Lista zakupów</CardTitle>
-            <DataLoader loader={() => getShoppingList(uid)} viewer={data => (
-                <>
-                    <IngredientList list={data} deleteOption clearOption exportOption manualAdder />
-                </>
+            <DataLoader noPreventEmptyList
+                        loader={() => getShoppingList(uid)}
+                        viewer={data => (
+                <IngredientList list={data} deleteOption clearOption exportOption manualAdder />
             )}/>
         </>
     )

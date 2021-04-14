@@ -1,40 +1,31 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import styled from 'styled-components'
-import config from '../config'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom'
 import CardTitle from '../components/CardTitle'
 import DataLoader from '../components/DataLoader'
 import { getAllRecipes } from '../firebase/firestore/recipes'
+import getCategoryName from '../utils/getCategoryName'
 
 const SearchGroup = styled.div`
-  padding: 10px;
-  i {
-    display: block;
-    text-align: center;
-  }
+    padding: 10px;
 `
 
 const SearchResultButton = styled(Button)`
-  position: relative;
-  text-align: left;
-  line-height: 40px;
-  margin-bottom: 12px;
+    position: relative;
+    text-align: left;
+    line-height: 40px;
+    margin-bottom: 12px;
 `
 
 const ButtonArrowIcon = styled(FontAwesomeIcon)`
-  position: absolute;
-  right: 20px;
-  margin-top: 20px;
-  transform: translateY(-50%);
+    position: absolute;
+    right: 20px;
+    margin-top: 20px;
+    transform: translateY(-50%);
 `
-
-const getCategoryName = categoryCode => {
-    const category = config.categories.find(i => i.code === categoryCode)
-    return category ? category.name : ''
-}
 
 const SearchResultPanels = ({recipes, searchQuery, historyHook}) => {
     searchQuery = searchQuery.toLowerCase()
@@ -50,12 +41,12 @@ const SearchResultPanels = ({recipes, searchQuery, historyHook}) => {
                             variant={'light'}
                             block
                             onClick={() => historyHook.push(`/recipes/${recipe.category}/${recipe.id}`)}>
-            {getCategoryName(recipe.category)}: {recipe.name}
+            <b>{recipe.name}</b> <i>({getCategoryName(recipe.category)})</i>
             <ButtonArrowIcon icon={faChevronRight} />
         </SearchResultButton>
     ))
     if(filteredRecipes.length === 0) {
-        return <i>nie znaleziono przepisów o takiej nazwie</i>
+        return <>nie znaleziono przepisów o takiej nazwie</>
     }else{
         return filteredRecipes
     }
@@ -71,12 +62,19 @@ const Search = () => {
             <SearchGroup>
                 <Form.Control type={'text'}
                               value={searchText}
-                              onChange={e => setSearchText(e.target.value)} placeholder={'Wpisz szukaną frazę (min. 3 znaki)'}
+                              onChange={e => setSearchText(e.target.value)}
+                              placeholder={'Wpisz szukaną frazę (min. 3 znaki)'}
                               maxLength={'30'} />
             </SearchGroup>
             <SearchGroup>
-                <DataLoader noPreventEmptyList loader={getAllRecipes} viewer={data => (
-                    searchText.length > 3 && <SearchResultPanels searchQuery={searchText} recipes={data} historyHook={history} />
+                <DataLoader noPreventEmptyList
+                            loader={getAllRecipes}
+                            viewer={data => (
+                    searchText.length > 2
+                    &&
+                    <SearchResultPanels searchQuery={searchText}
+                                        recipes={data}
+                                        historyHook={history} />
                 )} />
             </SearchGroup>
         </>

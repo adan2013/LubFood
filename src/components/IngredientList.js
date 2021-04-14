@@ -5,56 +5,51 @@ import { Button, ButtonGroup, Form, InputGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faShoppingCart, faClipboard, faTrash } from '@fortawesome/free-solid-svg-icons'
 import {addToShoppingList, clearShoppingList, deleteFromShoppingList} from '../firebase/firestore/shoppingList'
-import config from '../config'
 import copy from 'copy-to-clipboard'
 import firebase from  '../firebase/firebase'
 import ModalWindow from './ModalWindow'
+import getUnitName from '../utils/getUnitName'
 
 const ListContainer = styled.div`
-  text-align: center;
+    text-align: center;
 `
 
 const ItemContainer = styled.div`
-  position: relative;
-  background-color: #fff;
-  max-width: 600px;
-  margin: 0 auto 5px auto;
-  height: 44px;
-  line-height: 44px;
-  border-radius: 4px;
-  color: #000;
-  padding-left: 70px;
-  overflow-y: hidden;
-  text-align: left;
-  text-decoration: ${props => props.lineThrough ? 'line-through' : 'none'};
+    position: relative;
+    background-color: #fff;
+    max-width: 600px;
+    margin: 0 auto 5px auto;
+    height: 44px;
+    line-height: 44px;
+    border-radius: 4px;
+    color: #000;
+    padding-left: 70px;
+    overflow-y: hidden;
+    text-align: left;
+    text-decoration: ${props => props.lineThrough ? 'line-through' : 'none'};
 `
 
 const ItemButton = styled(Button)`
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  min-width: 50px;
-  text-align: center;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    min-width: 50px;
+    text-align: center;
 `
 
 const MainOptionContainer = styled(ButtonGroup)`
-  display: block;
-  text-align: center;
-  padding: 0 15px;
-  max-width: 600px;
-  margin: 15px auto;
-  svg { margin: 0 8px; }
+    display: block;
+    text-align: center;
+    padding: 0 15px;
+    max-width: 600px;
+    margin: 15px auto;
+    svg { margin: 0 8px; }
 `
 
 const ManualAdder = styled(InputGroup)`
-  margin: 15px auto;
-  max-width: 600px;
+    margin: 15px auto;
+    max-width: 600px;
 `
-
-const getUnitName = unitCode => {
-    const unit = config.ingredientUtils.find(i => i.code === unitCode)
-    return unit ? unit.name : ''
-}
 
 const convertObjects = list => {
     if(list.length === 0) return []
@@ -64,7 +59,7 @@ const convertObjects = list => {
             if(i.unit === '') {
                 return ''
             }else{
-                return `${i.name} [${getUnitName(i.unit)}]${i.value === 0 ? '' : ' - ' + i.value}`
+                return `${i.name} (${getUnitName(i.unit)})${i.value === 0 ? '' : ' - ' + i.value}`
             }
         })
     }
@@ -149,21 +144,21 @@ const IngredientList = (props) => {
                 {
                     props.addAllOption
                     &&
-                    <Button variant={'success'} onClick={addAll} disabled={itemsAdded || list.length === 0}>
+                    <Button variant={'success'} disabled={itemsAdded || list.length === 0} onClick={addAll}>
                         <FontAwesomeIcon icon={itemsAdded ? faCheck : faShoppingCart}/>{itemsAdded ? 'Dodano' : 'Dodaj wszystkie'}
                     </Button>
                 }
                 {
                     props.clearOption
                     &&
-                    <Button variant={'danger'} onClick={() => setDeleteModalIsOpen(true)} disabled={list.length === 0}>
+                    <Button variant={'danger'} disabled={list.length === 0} onClick={() => setDeleteModalIsOpen(true)}>
                         <FontAwesomeIcon icon={faTrash}/>Wyczyść
                     </Button>
                 }
                 {
                     props.exportOption
                     &&
-                    <Button variant={'warning'} onClick={copyToClipboard} disabled={dataCopied || list.length === 0}>
+                    <Button variant={'warning'} disabled={dataCopied || list.length === 0} onClick={copyToClipboard}>
                         <FontAwesomeIcon icon={dataCopied ? faCheck : faClipboard}/>{dataCopied ? 'Zapisano!' : 'Do schowka'}
                     </Button>
                 }
@@ -173,19 +168,20 @@ const IngredientList = (props) => {
                     <ListItem key={item} item={item} itemsAdded={itemsAdded} {...props} />
                 ))
             }
-            {list.length === 0 && <i>(lista składników jest pusta)</i>}
+            {list.length === 0 && <i>Lista składników jest pusta</i>}
             {
                 props.manualAdder
                 &&
                 <ManualAdder>
                     <Form.Control type={'text'}
                                   value={customItem}
-                                  onChange={e => setCustomItem(e.target.value)} placeholder={'Nowa pozycja'}
+                                  onChange={e => setCustomItem(e.target.value)}
+                                  placeholder={'Nowa pozycja'}
                                   maxLength={'50'} />
                     <InputGroup.Append>
                         <Button variant={'success'}
-                                onClick={addCustomItem}
-                                disabled={customItem.length < 5}>
+                                disabled={customItem.length < 5}
+                                onClick={addCustomItem}>
                             Dodaj
                         </Button>
                     </InputGroup.Append>

@@ -8,9 +8,9 @@ const Container = styled.div`
 `
 
 const Btn = styled(Button)`
-  min-width: 40px;
-  font-weight: bold;
-  font-size: 12px;
+      min-width: 40px;
+      font-weight: bold;
+      font-size: 12px;
 `
 
 const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label, zeroCustomText}) => {
@@ -34,7 +34,8 @@ const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label,
                     <InputGroup.Prepend>
                         {
                             step.slice().reverse().map(s => (
-                                <Btn key={'dn'+s} variant={'secondary'}
+                                <Btn key={'dn'+s}
+                                     variant={'secondary'}
                                      onClick={() => updateValue(-s)}
                                      disabled={val - s < minValue}>
                                     -{s}
@@ -53,7 +54,8 @@ const NumberPicker = ({minValue, maxValue, step, value, onChange, prefix, label,
                     <InputGroup.Append>
                         {
                             step.map(s => (
-                                <Btn key={'up'+s} variant={'secondary'}
+                                <Btn key={'up'+s}
+                                     variant={'secondary'}
                                      onClick={() => updateValue(s)}
                                      disabled={val + s > maxValue}>
                                     +{s}

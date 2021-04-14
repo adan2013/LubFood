@@ -13,16 +13,19 @@ class UserProvider extends Component {
     componentDidMount = () => {
         firebase.auth().onAuthStateChanged(userAuth => {
             if(userAuth) {
-                firebase.firestore().collection('whitelist').get()
-                    .then(() => {
-                        authorizationStart()
-                        this.setState({ user: userAuth })
-                    })
-                    .catch(() => {
-                        authorizationEnd()
-                        alert('PERMISSION DENIED!')
-                        this.setState({ user: null })
-                    })
+                authorizationStart()
+                this.setState({ user: userAuth })
+                // OPTIONAL DATABASE WHITELIST CHECK (DISABLED IN THIS PROJECT)
+                // firebase.firestore().collection('whitelist').get()
+                //     .then(() => {
+                //         authorizationStart()
+                //         this.setState({ user: userAuth })
+                //     })
+                //     .catch(() => {
+                //         authorizationEnd()
+                //         alert('PERMISSION DENIED!')
+                //         this.setState({ user: null })
+                //     })
             }else{
                 authorizationEnd()
                 this.setState({ user: null })
