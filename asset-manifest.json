@@ -1,15 +1,13 @@
 {
   "files": {
     "main.css": "/LubFood/static/css/main.b36d2e49.chunk.css",
-    "main.js": "/LubFood/static/js/main.9fb5b95f.chunk.js",
-    "main.js.map": "/LubFood/static/js/main.9fb5b95f.chunk.js.map",
-    "runtime-main.js": "/LubFood/static/js/runtime-main.8a1536f5.js",
-    "runtime-main.js.map": "/LubFood/static/js/runtime-main.8a1536f5.js.map",
+    "main.js": "/LubFood/static/js/main.da4a7c00.chunk.js",
+    "main.js.map": "/LubFood/static/js/main.da4a7c00.chunk.js.map",
+    "runtime-main.js": "/LubFood/static/js/runtime-main.42463b95.js",
+    "runtime-main.js.map": "/LubFood/static/js/runtime-main.42463b95.js.map",
     "static/css/2.4c97ca4f.chunk.css": "/LubFood/static/css/2.4c97ca4f.chunk.css",
     "static/js/2.71248773.chunk.js": "/LubFood/static/js/2.71248773.chunk.js",
     "static/js/2.71248773.chunk.js.map": "/LubFood/static/js/2.71248773.chunk.js.map",
-    "static/js/3.6d60e510.chunk.js": "/LubFood/static/js/3.6d60e510.chunk.js",
-    "static/js/3.6d60e510.chunk.js.map": "/LubFood/static/js/3.6d60e510.chunk.js.map",
     "index.html": "/LubFood/index.html",
     "static/css/2.4c97ca4f.chunk.css.map": "/LubFood/static/css/2.4c97ca4f.chunk.css.map",
     "static/css/main.b36d2e49.chunk.css.map": "/LubFood/static/css/main.b36d2e49.chunk.css.map",
@@ -17,10 +15,10 @@
     "static/media/lubfoodlogo.00dc66c1.png": "/LubFood/static/media/lubfoodlogo.00dc66c1.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.8a1536f5.js",
+    "static/js/runtime-main.42463b95.js",
     "static/css/2.4c97ca4f.chunk.css",
     "static/js/2.71248773.chunk.js",
     "static/css/main.b36d2e49.chunk.css",
-    "static/js/main.9fb5b95f.chunk.js"
+    "static/js/main.da4a7c00.chunk.js"
   ]
 }
