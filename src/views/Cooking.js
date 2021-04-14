@@ -13,14 +13,17 @@ import CookingPopupPanel from '../components/CookingPopupPanel'
 
 const TextContainer = styled.div`
   font-size: ${props => props.fontSize + 'px'};
-  padding: 20px 20px 240px;
+  padding: 20px 20px 100px;
 `
 
 const ControlButtonMainContainer = styled.div`
   position: fixed;
-  left: 0;
-  bottom: 10px;
+  left: 50%;
+  bottom: 0;
   width: 100%;
+  max-width: 800px;
+  background-color: #3589e3;
+  transform: translateX(-50%);
 `
 
 const ControlButtonRowContainer = styled.div`
