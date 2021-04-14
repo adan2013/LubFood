@@ -26,7 +26,7 @@ export const getRecipesFromCategory = (categoryCode, sortData = true) => {
 
 export const getRecipe = recipeId => {
     return firebase.firestore().collection(RECIPES_COLL).doc(recipeId).get()
-        .then(recipe => recipe.data())
+        .then(doc => (doc.exists ? doc.data() : []))
         .catch(err => alert(`GET ERROR ${err.code}`))
 }
 

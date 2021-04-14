@@ -4,7 +4,7 @@ const SHOPPING_LIST_COLL = 'shoppingList'
 
 export const getShoppingList = uid => {
     return firebase.firestore().collection(SHOPPING_LIST_COLL).doc(uid).get()
-        .then(list => list.data().list)
+        .then(doc => (doc.exists ? doc.data().list : []))
         .catch(err => alert(`GET ERROR ${err.code}`))
 }
 
