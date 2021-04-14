@@ -13,7 +13,7 @@ const PopupMainContainer = styled.div`
   display: ${props => props.hide ? 'none' : 'block'};
   position: fixed;
   left: 0;
-  bottom: 320px;
+  bottom: 180px;
   width: 100%;
 `
 
@@ -21,7 +21,7 @@ const PopupContainer = styled.div`
   position: relative;
   background-color: #fff;
   border-radius: 5px;
-  width: 400px;
+  width: 320px;
   max-width: 90vw;
   height: 90px;
   margin: 0 auto;

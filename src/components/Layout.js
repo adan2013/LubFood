@@ -17,12 +17,15 @@ const Content = styled.div`
   box-shadow: 0 0 30px 6px rgba(0, 0, 0, 0.75);
 `
 
-const Layout = ({children}) => (
-    <Container>
-        <Content>{children}</Content>
-        <NavMenu/>
-    </Container>
-)
+const Layout = (props) => {
+    const showMenu = !window.location.href.includes('/cooking')
+    return (
+        <Container>
+            <Content>{props.children}</Content>
+            {showMenu && <NavMenu/>}
+        </Container>
+    )
+}
 
 Layout.propTypes = {
     children: PropTypes.element.isRequired

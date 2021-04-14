@@ -5,7 +5,6 @@ import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCarrot, faClock, faSearchPlus, faChevronLeft, faTimes, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { useHistory, useParams } from 'react-router-dom'
-import CardTitle from '../components/CardTitle'
 import { getRecipe } from '../firebase/firestore/recipes'
 import DataLoader from '../components/DataLoader'
 import ModalWindow from '../components/ModalWindow'
@@ -20,7 +19,7 @@ const TextContainer = styled.div`
 const ControlButtonMainContainer = styled.div`
   position: fixed;
   left: 0;
-  bottom: 70px;
+  bottom: 10px;
   width: 100%;
 `
 
@@ -28,18 +27,18 @@ const ControlButtonRowContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-width: 400px;
-  margin: 30px auto;
+  max-width: 300px;
+  margin: 15px auto;
 `
 
 const ControlButtonStyle = styled(Button)`
   flex: 1;
   border-radius: 50%;
   display: block;
-  max-width: 80px;
-  height: 80px;
+  max-width: 60px;
+  height: 60px;
   margin: 0 auto;
-  font-size: 2rem;
+  font-size: 1.6rem;
 `
 
 const ControlButton = ({variant = 'light', icon, onClick, disabled}) => {
@@ -94,7 +93,6 @@ const Cooking = () => {
         <>
             <DataLoader loader={() => getRecipe(recipe)} viewer={data => (
                 <>
-                    <CardTitle>{data.name}</CardTitle>
                     <TextContainer fontSize={fontSize}>
                         {ingredientMode ? getIngredientList(data.ingredients) : `${stepNumber+1}. ${data.steps[stepNumber].text}`}
                     </TextContainer>
